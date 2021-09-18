@@ -13,7 +13,7 @@ class ShoppingCart extends React.Component {
           <img
             width="40px"
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSS97Ebf7j7tVXfBfCecWctHDbp7UVJRQBdDhIQtrTJHbnXFugi_UsZ-aPE5TGVDYO3ZkM&usqp=CAU"
-            alt="return home arrow"
+            alt="return"
           />
         </Link>
       </div>
