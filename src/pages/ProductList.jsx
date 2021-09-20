@@ -1,4 +1,5 @@
 import React from 'react';
+import CategoriesList from '../components/CategoriesList';
 
 class ProductList extends React.Component {
   render() {
@@ -8,6 +9,7 @@ class ProductList extends React.Component {
         <p data-testid="home-initial-message">
           Digite algum termo de pesquisa ou escolha uma categoria.
         </p>
+        <CategoriesList />
       </main>
     );
   }
