@@ -25,7 +25,11 @@ export default class SearchComponent extends Component {
 }
 
 SearchComponent.propTypes = {
-  onClick: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
-  input: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
+  onChange: PropTypes.func,
+  input: PropTypes.string,
+}.isRequired;
+
+SearchComponent.defaultProps = {
+  input: '',
 };
