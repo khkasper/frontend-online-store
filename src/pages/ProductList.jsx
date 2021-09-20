@@ -1,23 +1,21 @@
-import React from 'react';
-import CategoriesList from '../components/CategoriesList';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import ShoppingCartButton from '../components/ShoppingCartButton';
+import ProductCard from '../components/ProductCard';
 
-class ProductList extends React.Component {
+export default class ProductList extends Component {
   render() {
+    const { list } = this.props;
     return (
-      <div>
-        <ShoppingCartButton />
-        <main>
-          <input type="text" />
-          <p data-testid="home-initial-message">
-            Digite algum termo de pesquisa ou escolha uma categoria.
-          </p>
-          <CategoriesList />
-        </main>
-      </div>
+      <section>
+        { !list.length
+          ? <p> Nenhum produto foi encontrado </p>
+          : list.map((product, key) => <ProductCard key={ key } product={ product } />)}
+      </section>
     );
   }
 }
 
-export default ProductList;
+ProductList.propTypes = {
+  list: PropTypes.arrayOf(PropTypes.any).isRequired,
+};
