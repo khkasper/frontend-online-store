@@ -1,24 +1,11 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component } from 'react';
 
-import ShoppingCartButton from '../components/ShoppingCartButton';
-
-class ShoppingCart extends React.Component {
+export default class ShoppingCart extends Component {
   render() {
     return (
       <div>
-        <ShoppingCartButton />
         <p data-testid="shopping-cart-empty-message">Seu carrinho está vazio</p>
-        <Link to="/">
-          <img
-            width="40px"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSS97Ebf7j7tVXfBfCecWctHDbp7UVJRQBdDhIQtrTJHbnXFugi_UsZ-aPE5TGVDYO3ZkM&usqp=CAU"
-            alt="return"
-          />
-        </Link>
       </div>
     );
   }
 }
-
-export default ShoppingCart;

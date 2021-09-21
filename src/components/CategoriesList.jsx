@@ -1,26 +1,46 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import CategoryItem from './CategoryItem';
+import { getCategories } from '../services/api';
 
-class Categories extends React.Component {
+export default class CategoriesList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      categories: [],
+    };
+  }
+
+  componentDidMount() {
+    this.fetchCategories();
+  }
+
+  fetchCategories = async () => {
+    const data = await getCategories();
+    if (data) this.setState({ categories: data });
+  };
+
   render() {
-    const { categoriesList } = this.props;
+    const { categories } = this.state;
+    const { selectedCategory, onChange } = this.props;
+
     return (
-      <div>
-        {categoriesList.map(({ id, name }) => (
-          <div key={ id }>
-            <label data-testid="category" htmlFor={ id }>
-              <input id={ id } type="radio" name="category" />
-              { name }
-            </label>
-          </div>
+      <ul>
+        {categories.map(({ id, name }) => (
+          <CategoryItem
+            key={ id }
+            categoryName={ name }
+            categoryId={ id }
+            selectedCategory={ selectedCategory }
+            onChange={ onChange }
+          />
         ))}
-      </div>
+      </ul>
     );
   }
 }
 
-Categories.propTypes = {
-  categoriesList: PropTypes.arrayOf(PropTypes.object).isRequired,
+CategoriesList.propTypes = {
+  selectedCategory: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
-
-export default Categories;

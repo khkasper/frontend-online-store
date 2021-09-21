@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-class ShoppingCartButton extends React.Component {
+export default class ShoppingCartButton extends Component {
   render() {
     return (
       <div>
@@ -12,5 +12,3 @@ class ShoppingCartButton extends React.Component {
     );
   }
 }
-
-export default ShoppingCartButton;

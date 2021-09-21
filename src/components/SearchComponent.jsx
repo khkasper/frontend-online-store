@@ -2,34 +2,35 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 export default class SearchComponent extends Component {
+  handleClick = () => {
+    const { searchTerm, onClick } = this.props;
+    onClick('', searchTerm);
+  }
+
   render() {
-    const { input, onChange, onClick } = this.props;
+    const { searchTerm, onChange } = this.props;
     return (
-      <div>
+      <form>
         <input
-          value={ input }
+          type="text"
+          value={ searchTerm }
           onChange={ onChange }
-          name="input"
           data-testid="query-input"
         />
         <button
           type="button"
-          onClick={ onClick }
+          onClick={ this.handleClick }
           data-testid="query-button"
         >
-          Buscar
+          Pesquisar
         </button>
-      </div>
+      </form>
     );
   }
 }
 
 SearchComponent.propTypes = {
-  onClick: PropTypes.func,
-  onChange: PropTypes.func,
-  input: PropTypes.string,
-}.isRequired;
-
-SearchComponent.defaultProps = {
-  input: '',
+  searchTerm: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
 };

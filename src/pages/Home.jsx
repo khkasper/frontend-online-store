@@ -1,67 +1,61 @@
 import React, { Component } from 'react';
-import { getProductsFromCategoryAndQuery, getCategories } from '../services/api';
 import ProductList from './ProductList';
 import SearchComponent from '../components/SearchComponent';
 import CategoriesList from '../components/CategoriesList';
-import ShoppingCartButton from '../components/ShoppingCartButton';
+import { getProductsFromCategoryAndQuery } from '../services/api';
 
-class Home extends Component {
+export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      category: '',
-      input: '',
-      list: [],
-      submit: false,
-      categoriesList: [],
+      productList: [],
+      searchTerm: '',
+      selectedCategory: '',
     };
   }
 
-  componentDidMount() {
-    this.getCategoriesList();
-  }
+  handleSearch = ({ target }) => {
+    this.setState({ searchTerm: target.value });
+  };
 
-  handleChange = ({ target }) => {
-    const { name, value } = target;
-    this.setState({
-      [name]: value,
-    });
-  }
+  handleCategory = ({ target }) => {
+    if (target.value) this.getProducts(target.value, '');
+    this.setState({ selectedCategory: target.value });
+  };
 
-  handleClick = () => {
-    const { input, category } = this.state;
-    this.setState(async () => {
-      const listaProdutos = await getProductsFromCategoryAndQuery(category, input);
-      this.setState({
-        list: listaProdutos.results,
-        submit: true,
-      });
-    });
-  }
-
-  getCategoriesList = async () => {
-    const categories = await getCategories();
-    this.setState({ categoriesList: categories });
-  }
+  getProducts = async (category, query) => {
+    const response = await getProductsFromCategoryAndQuery(category, query);
+    const products = response.results.map((product) => ({
+      id: product.id,
+      title: product.title,
+      thumbnail: product.thumbnail,
+      price: product.price,
+      ttributes: product.attributes,
+    }));
+    this.setState({ productList: products });
+  };
 
   render() {
-    const { input, list, submit, categoriesList } = this.state;
+    const { searchTerm, productList, selectedCategory } = this.state;
     return (
-      <div data-testid="home-initial-message">
-        Digite algum termo de pesquisa ou escolha uma categoria.
+      <div>
         <div>
-          <ShoppingCartButton />
+          <SearchComponent
+            searchTerm={ searchTerm }
+            onChange={ this.handleSearch }
+            onClick={ this.getProducts }
+          />
         </div>
-        <SearchComponent
-          value={ input }
-          onChange={ this.handleChange }
-          onClick={ this.handleClick }
-        />
-        <CategoriesList categoriesList={ categoriesList } />
-        { submit && <ProductList list={ list } /> }
+        <div>
+          <CategoriesList
+            selectedCategory={ selectedCategory }
+            onChange={ this.handleCategory }
+          />
+        </div>
+        <div>
+          <ProductList productList={ productList } />
+        </div>
       </div>
     );
   }
 }
-
-export default Home;
