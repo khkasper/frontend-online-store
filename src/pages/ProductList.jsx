@@ -1,21 +1,29 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
 import ProductCard from '../components/ProductCard';
 
 export default class ProductList extends Component {
   render() {
-    const { list } = this.props;
+    const { productList } = this.props;
+
+    if (!productList.length) {
+      return (
+        <p data-testid="home-initial-message">
+          Digite algum termo de pesquisa ou escolha uma categoria.
+        </p>
+      );
+    }
+
     return (
-      <section>
-        { !list.length
-          ? <p> Nenhum produto foi encontrado </p>
-          : list.map((product, key) => <ProductCard key={ key } product={ product } />)}
-      </section>
+      <div>
+        {productList.map((product) => (
+          <ProductCard key={ product.id } product={ product } />
+        ))}
+      </div>
     );
   }
 }
 
 ProductList.propTypes = {
-  list: PropTypes.arrayOf(PropTypes.any).isRequired,
+  productList: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
