@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import ProductList from './ProductList';
 import SearchComponent from '../components/SearchComponent';
 import CategoriesList from '../components/CategoriesList';
 import { getProductsFromCategoryAndQuery } from '../services/api';
 
-export default class Home extends Component {
+class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -35,6 +36,11 @@ export default class Home extends Component {
     this.setState({ productList: products });
   };
 
+  addCart = (product) => {
+    const { onAdd } = this.props;
+    onAdd(product);
+  }
+
   render() {
     const { searchTerm, productList, selectedCategory } = this.state;
     return (
@@ -53,9 +59,18 @@ export default class Home extends Component {
           />
         </div>
         <div>
-          <ProductList productList={ productList } />
+          <ProductList
+            productList={ productList }
+            onAdd={ this.addCart }
+          />
         </div>
       </div>
     );
   }
 }
+
+Home.propTypes = {
+  onAdd: PropTypes.func.isRequired,
+};
+
+export default Home;
