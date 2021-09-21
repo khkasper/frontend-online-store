@@ -4,16 +4,21 @@ import PropTypes from 'prop-types';
 
 export default class ProductCard extends Component {
   render() {
-    const { product } = this.props;
+    const {
+      product: { title, thumbnail, price, id },
+    } = this.props;
     return (
-      <div data-testid="product" key={ product.id }>
+      <div data-testid="product" key={ id }>
         <Link
           data-testid="product-detail-link"
-          to={ `/productdetails/${product.id}` }
+          to={ {
+            pathname: `/productdetails/${id}`,
+            state: this.props,
+          } }
         >
-          <p>{ product.title }</p>
-          <img src={ product.thumbnail } alt={ product.title } />
-          <p>{ product.price }</p>
+          <p>{ title }</p>
+          <img src={ thumbnail } alt={ title } />
+          <p>{ price }</p>
         </Link>
       </div>
     );
