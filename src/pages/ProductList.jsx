@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ProductCard from '../components/ProductCard';
 
-export default class ProductList extends Component {
+class ProductList extends Component {
+  addCart = (product) => {
+    const { onAdd } = this.props;
+    onAdd(product);
+  }
+
   render() {
     const { productList } = this.props;
 
@@ -17,7 +22,11 @@ export default class ProductList extends Component {
     return (
       <div>
         {productList.map((product) => (
-          <ProductCard key={ product.id } product={ product } />
+          <ProductCard
+            key={ product.id }
+            product={ product }
+            onAdd={ this.addCart }
+          />
         ))}
       </div>
     );
@@ -26,4 +35,7 @@ export default class ProductList extends Component {
 
 ProductList.propTypes = {
   productList: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onAdd: PropTypes.func.isRequired,
 };
+
+export default ProductList;

@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-export default class ProductCard extends Component {
+class ProductCard extends Component {
+  addCart = () => {
+    const { product, onAdd } = this.props;
+    onAdd(product);
+  }
+
   render() {
     const {
       product: { title, thumbnail, price, id },
@@ -20,6 +25,13 @@ export default class ProductCard extends Component {
           <img src={ thumbnail } alt={ title } />
           <p>{ price }</p>
         </Link>
+        <button
+          type="button"
+          onClick={ this.addCart }
+          data-testid="product-add-to-cart"
+        >
+          Adicionar ao carrinho
+        </button>
       </div>
     );
   }
@@ -32,4 +44,7 @@ ProductCard.propTypes = {
     thumbnail: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
   }).isRequired,
+  onAdd: PropTypes.func.isRequired,
 };
+
+export default ProductCard;
