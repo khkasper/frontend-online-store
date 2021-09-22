@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 class ProductCard extends Component {
-  addCart = () => {
+  addToCart = () => {
     const { product, onAdd } = this.props;
     onAdd(product);
   }
@@ -26,7 +26,7 @@ class ProductCard extends Component {
         </Link>
         <button
           type="button"
-          onClick={ this.addCart }
+          onClick={ this.addToCart }
           data-testid="product-add-to-cart"
         >
           Adicionar ao carrinho

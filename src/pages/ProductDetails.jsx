@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+
 import ReturnButton from '../components/ReturnButton';
+import EvaluationForm from '../components/EvaluationForm';
 
 class ProductDetails extends Component {
-  addCart = () => {
+  addToCart = () => {
     const { onAdd } = this.props;
     const { props: { location: { state } } } = this;
     onAdd(state);
@@ -24,10 +26,11 @@ class ProductDetails extends Component {
         <button
           data-testid="product-detail-add-to-cart"
           type="button"
-          onClick={ this.addCart }
+          onClick={ this.addToCart }
         >
           Adicionar ao carrinho
         </button>
+        <EvaluationForm />
         <ReturnButton />
       </div>
     );

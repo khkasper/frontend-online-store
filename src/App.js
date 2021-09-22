@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
 import Home from './pages/Home';
 import ShoppingCart from './pages/ShoppingCart';
 import ProductDetails from './pages/ProductDetails';
@@ -42,7 +43,7 @@ class App extends React.Component {
     }, () => this.addQuantity());
   }
 
-  addCart = (product) => {
+  addToCart = (product) => {
     this.setState((previousState) => ({
       itemList: [...previousState.itemList, product],
     }), () => this.addQuantity());
@@ -56,7 +57,7 @@ class App extends React.Component {
           <ShoppingCartButton />
           <Switch>
             <Route exact path="/">
-              <Home onAdd={ this.addCart } />
+              <Home onAdd={ this.addToCart } />
             </Route>
             <Route
               path="/shoppingcart"
@@ -69,7 +70,7 @@ class App extends React.Component {
             <Route
               path="/productdetails/:id"
               component={
-                (props) => <ProductDetails { ...props } onAdd={ this.addCart } />
+                (props) => <ProductDetails { ...props } onAdd={ this.addToCart } />
               }
             />
           </Switch>
