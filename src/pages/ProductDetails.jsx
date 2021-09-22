@@ -42,6 +42,7 @@ ProductDetails.propTypes = {
       thumbnail: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
-}
+  onAdd: PropTypes.func.isRequired,
+};
 
 export default ProductDetails;
