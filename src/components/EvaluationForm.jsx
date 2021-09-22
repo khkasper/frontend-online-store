@@ -7,7 +7,7 @@ class EvaluationForm extends React.Component {
       email: '',
       comment: '',
       rating: 1,
-    }
+    };
   }
 
   handleChange = ({ target }) => {
@@ -23,11 +23,11 @@ class EvaluationForm extends React.Component {
       email: '',
       comment: '',
       rating: 1,
-    })
+    });
   }
-  
+
   render() {
-    const { email, rating, comment } = this.state
+    const { email, rating, comment } = this.state;
     return (
       <div>
         <h3>Avaliações:</h3>
@@ -61,10 +61,10 @@ class EvaluationForm extends React.Component {
               onChange={ this.handleChange }
             />
           </label>
-            <button
-              type="button"
-              onClick={ this.handleClick }
-            >
+          <button
+            type="button"
+            onClick={ this.handleClick }
+          >
             Enviar
           </button>
         </form>
