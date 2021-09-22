@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ProductCard from '../components/ProductCard';
+import ProductCard from './ProductCard';
 
 class ProductList extends Component {
   addCart = (product) => {
