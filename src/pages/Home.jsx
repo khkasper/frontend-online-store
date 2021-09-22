@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ProductList from './ProductList';
+import ProductList from '../components/ProductList';
 import SearchComponent from '../components/SearchComponent';
 import CategoriesList from '../components/CategoriesList';
 import { getProductsFromCategoryAndQuery } from '../services/api';
@@ -55,7 +55,7 @@ class Home extends Component {
         <div>
           <CategoriesList
             selectedCategory={ selectedCategory }
-            onChange={ this.handleCategory }
+            handleCategory={ this.handleCategory }
           />
         </div>
         <div>

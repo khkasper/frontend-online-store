@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import ReturnButton from '../components/ReturnButton';
 
 class ProductDetails extends Component {
+  addCart = () => {
+    const { onAdd } = this.props;
+    const { props: { location: { state } } } = this;
+    onAdd(state);
+  }
+
   render() {
-    const { location: { state: { product: { title, price, thumbnail } } } } = this.props;
+    const { props: { location: { state } } } = this;
+    const { title, price, thumbnail } = state;
     return (
       <div>
         <h3 data-testid="product-detail-name">
@@ -13,7 +21,14 @@ class ProductDetails extends Component {
         <h3>
           { `R$${price}`}
         </h3>
-        <button type="button"> Comprar </button>
+        <button
+          data-testid="product-detail-add-to-cart"
+          type="button"
+          onClick={ this.addCart }
+        >
+          Adicionar ao carrinho
+        </button>
+        <ReturnButton />
       </div>
     );
   }
@@ -22,13 +37,11 @@ class ProductDetails extends Component {
 ProductDetails.propTypes = {
   location: PropTypes.shape({
     state: PropTypes.shape({
-      product: PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-        thumbnail: PropTypes.string.isRequired,
-      }).isRequired,
+      title: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      thumbnail: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
-};
+}
 
 export default ProductDetails;

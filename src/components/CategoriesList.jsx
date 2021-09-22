@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+
 import CategoryItem from './CategoryItem';
 import { getCategories } from '../services/api';
 
-export default class CategoriesList extends Component {
+class CategoriesList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,25 +23,29 @@ export default class CategoriesList extends Component {
 
   render() {
     const { categories } = this.state;
-    const { selectedCategory, onChange } = this.props;
+    const { selectedCategory, handleCategory } = this.props;
 
     return (
-      <ul>
-        {categories.map(({ id, name }) => (
-          <CategoryItem
-            key={ id }
-            categoryName={ name }
-            categoryId={ id }
-            selectedCategory={ selectedCategory }
-            onChange={ onChange }
-          />
-        ))}
-      </ul>
+      <div>
+        <ul>
+          {categories.length !== 0 && categories.map(({ id, name }) => (
+            <CategoryItem
+              key={ id }
+              categoryName={ name }
+              categoryId={ id }
+              selectedCategory={ selectedCategory }
+              onChange={ handleCategory }
+            />
+          ))}
+        </ul>
+      </div>
     );
   }
 }
 
 CategoriesList.propTypes = {
   selectedCategory: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+  handleCategory: PropTypes.func.isRequired,
 };
+
+export default CategoriesList;

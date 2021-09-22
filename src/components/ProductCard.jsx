@@ -9,16 +9,15 @@ class ProductCard extends Component {
   }
 
   render() {
-    const {
-      product: { title, thumbnail, price, id },
-    } = this.props;
+    const { product } = this.props;
+    const { title, thumbnail, price, id } = product;
     return (
       <div data-testid="product" key={ id }>
         <Link
           data-testid="product-detail-link"
           to={ {
             pathname: `/productdetails/${id}`,
-            state: this.props,
+            state: product,
           } }
         >
           <p>{ title }</p>
