@@ -6,22 +6,24 @@ export default class CategoryItem extends Component {
     const { categoryName, categoryId, selectedCategory, onChange } = this.props;
     const selected = selectedCategory === categoryId;
     return (
-      <ul>
-        <input
-          type="radio"
-          name="category"
-          id={ categoryId }
-          value={ categoryId }
-          checked={ selected }
-          onChange={ onChange }
-        />
-        <label
-          htmlFor={ categoryId }
-          data-testid="category"
-        >
-          { categoryName }
-        </label>
-      </ul>
+      <div>
+        <ul>
+          <input
+            type="radio"
+            name="category"
+            id={ categoryId }
+            value={ categoryId }
+            checked={ selected }
+            onChange={ onChange }
+          />
+          <label
+            htmlFor={ categoryId }
+            data-testid="category"
+          >
+            { categoryName }
+          </label>
+        </ul>
+      </div>
     );
   }
 }

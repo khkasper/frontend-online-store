@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import ReturnButton from '../components/ReturnButton';
 
 class ShoppingCart extends Component {
   render() {
@@ -16,6 +17,7 @@ class ShoppingCart extends Component {
               <p data-testid="shopping-cart-product-quantity">1</p>
             </div>
           ))}
+        <ReturnButton />
       </div>
     );
   }

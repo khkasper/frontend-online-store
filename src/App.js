@@ -19,10 +19,6 @@ class App extends React.Component {
     this.setState({
       cart: [...cart, product],
     });
-
-    // this.setState((prevState) => ({
-    // cart: [...prevState.cart, product],
-    // }));
   }
 
   render() {
@@ -35,10 +31,15 @@ class App extends React.Component {
             <Route exact path="/">
               <Home onAdd={ this.addCart } />
             </Route>
-            <Route exact path="/shoppingcart">
+            <Route path="/shoppingcart">
               <ShoppingCart cart={ cart } />
             </Route>
-            <Route exact path="/productdetails/:id" component={ ProductDetails } />
+            <Route
+              path="/productdetails/:id"
+              component={
+                (props) => <ProductDetails { ...props } onAdd={ this.addCart } />
+              }
+            />
           </Switch>
         </div>
       </BrowserRouter>
