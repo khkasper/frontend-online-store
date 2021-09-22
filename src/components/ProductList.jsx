@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+
 import ProductCard from './ProductCard';
 
 class ProductList extends Component {
-  addCart = (product) => {
+  addToCart = (product) => {
     const { onAdd } = this.props;
     onAdd(product);
   }
@@ -25,7 +26,7 @@ class ProductList extends Component {
           <ProductCard
             key={ product.id }
             product={ product }
-            onAdd={ this.addCart }
+            onAdd={ this.addToCart }
           />
         ))}
       </div>
