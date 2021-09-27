@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
+import { Link } from 'react-router-dom';
 import ReturnButton from '../components/ReturnButton';
 import CartItem from '../components/CartItem';
 
@@ -41,22 +41,27 @@ class ShoppingCart extends Component {
       );
     }
     return (
-      <div>
-        <p>{`Total: ${total.toFixed(2)}`}</p>
-        { cartList.map((
-          { id, price, quantity, thumbnail, title }, index,
-        ) => (<CartItem
-          key={ index }
-          id={ id }
-          price={ price }
-          quantity={ quantity }
-          thumbnail={ thumbnail }
-          title={ title }
-          removeItem={ removeItem }
-          setQuantity={ setQuantity }
-        />))}
-        <ReturnButton />
-      </div>
+      <section>
+        <div>
+          <p>{`Total: ${total.toFixed(2)}`}</p>
+          { cartList.map((
+            { id, price, quantity, thumbnail, title }, index,
+          ) => (<CartItem
+            key={ index }
+            id={ id }
+            price={ price }
+            quantity={ quantity }
+            thumbnail={ thumbnail }
+            title={ title }
+            removeItem={ removeItem }
+            setQuantity={ setQuantity }
+          />))}
+          <ReturnButton />
+        </div>
+        <Link to="/checkout">
+          <button data-testid="checkout-products" type="button">Finalizar Compra</button>
+        </Link>
+      </section>
     );
   }
 }
