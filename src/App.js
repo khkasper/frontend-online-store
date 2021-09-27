@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-
 import Home from './pages/Home';
 import ShoppingCart from './pages/ShoppingCart';
 import ProductDetails from './pages/ProductDetails';
 import ShoppingCartButton from './components/ShoppingCartButton';
+import Checkout from './pages/Checkout';
 
 class App extends React.Component {
   constructor(props) {
@@ -59,6 +59,12 @@ class App extends React.Component {
             <Route exact path="/">
               <Home onAdd={ this.addToCart } />
             </Route>
+            {/* render do checkout pode estar com erro
+            pois cartList não deve ser o correto */}
+            <Route
+              path="/checkout"
+              render={ ((props) => <Checkout { ...props } cartList={ cartList } />) }
+            />
             <Route
               path="/shoppingcart"
               render={ () => (<ShoppingCart
