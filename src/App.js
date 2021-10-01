@@ -12,7 +12,12 @@ class App extends React.Component {
     this.state = {
       itemList: [],
       cartList: [],
+      quantity: 0,
     };
+  }
+
+  componentDidMount() {
+    this.getLocalStorage();
   }
 
   setQuantity = (quantity, id) => {
@@ -22,10 +27,27 @@ class App extends React.Component {
         return item;
       });
       return { cartList };
-    });
+    }, () => this.setCartQuantity());
   }
 
-  addQuantity = () => {
+  setLocalStorage = () => {
+    localStorage.setItem('quantity', JSON.stringify(this.state));
+  }
+
+  getLocalStorage = () => {
+    const stateStorage = JSON.parse(localStorage.getItem('quantity'));
+    this.setState({ ...stateStorage });
+  }
+
+  setCartQuantity = () => {
+    const { cartList } = this.state;
+    const totalQuantity = cartList
+      .map(({ quantity }) => quantity)
+      .reduce((total, quantityItem) => total + quantityItem, 0);
+    this.setState({ quantity: totalQuantity }, () => this.setLocalStorage());
+  }
+
+  cartQuantity = () => {
     const { itemList } = this.state;
     const cartList = itemList.reduce((list, item) => {
       const includes = list.some(({ id }) => item.id === id);
@@ -33,34 +55,32 @@ class App extends React.Component {
       item.quantity = itemList.filter(({ id }) => id === item.id).length;
       return [...list, item];
     }, []);
-    this.setState({ cartList });
+    this.setState({ cartList }, () => this.setCartQuantity());
+  }
+
+  addItem = (product) => {
+    this.setState((previousState) => ({
+      itemList: [...previousState.itemList, product],
+    }), () => this.cartQuantity());
   }
 
   removeItem = (idItem) => {
     this.setState((prev) => {
       const clearList = prev.itemList.filter(({ id }) => id !== idItem);
       return { itemList: clearList };
-    }, () => this.addQuantity());
-  }
-
-  addToCart = (product) => {
-    this.setState((previousState) => ({
-      itemList: [...previousState.itemList, product],
-    }), () => this.addQuantity());
+    }, () => this.cartQuantity());
   }
 
   render() {
-    const { cartList } = this.state;
+    const { cartList, quantity } = this.state;
     return (
       <BrowserRouter>
         <div>
-          <ShoppingCartButton />
+          <ShoppingCartButton quantity={ quantity } />
           <Switch>
             <Route exact path="/">
-              <Home onAdd={ this.addToCart } />
+              <Home onAdd={ this.addItem } />
             </Route>
-            {/* render do checkout pode estar com erro
-            pois cartList não deve ser o correto */}
             <Route
               path="/checkout"
               render={ ((props) => <Checkout { ...props } cartList={ cartList } />) }
@@ -76,7 +96,7 @@ class App extends React.Component {
             <Route
               path="/productdetails/:id"
               component={
-                (props) => <ProductDetails { ...props } onAdd={ this.addToCart } />
+                (props) => (<ProductDetails { ...props } onAdd={ this.addItem } />)
               }
             />
           </Switch>

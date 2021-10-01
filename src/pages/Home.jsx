@@ -36,7 +36,7 @@ class Home extends Component {
     this.setState({ productList: products });
   };
 
-  addToCart = (product) => {
+  addItem = (product) => {
     const { onAdd } = this.props;
     onAdd(product);
   }
@@ -61,7 +61,7 @@ class Home extends Component {
         <div>
           <ProductList
             productList={ productList }
-            onAdd={ this.addToCart }
+            onAdd={ this.addItem }
           />
         </div>
       </div>

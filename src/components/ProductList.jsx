@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import ProductCard from './ProductCard';
 
 class ProductList extends Component {
-  addToCart = (product) => {
+  addItem = (product) => {
     const { onAdd } = this.props;
     onAdd(product);
   }
@@ -26,7 +26,7 @@ class ProductList extends Component {
           <ProductCard
             key={ product.id }
             product={ product }
-            onAdd={ this.addToCart }
+            onAdd={ this.addItem }
           />
         ))}
       </div>
