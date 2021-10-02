@@ -45,7 +45,13 @@ class ShoppingCart extends Component {
         <div>
           <p>{`Total: ${total.toFixed(2)}`}</p>
           { cartList.map((
-            { id, price, quantity, thumbnail, title }, index,
+            { id,
+              price,
+              quantity,
+              thumbnail,
+              title,
+              availableQuantity,
+            }, index,
           ) => (<CartItem
             key={ index }
             id={ id }
@@ -53,6 +59,7 @@ class ShoppingCart extends Component {
             quantity={ quantity }
             thumbnail={ thumbnail }
             title={ title }
+            availableQuantity={ availableQuantity }
             removeItem={ removeItem }
             setQuantity={ setQuantity }
           />))}
@@ -74,6 +81,7 @@ ShoppingCart.propTypes = {
       quantity: PropTypes.number.isRequired,
       thumbnail: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
+      available_quantity: PropTypes.number.isRequired,
     }),
   ).isRequired,
   removeItem: PropTypes.func.isRequired,

@@ -20,20 +20,6 @@ class App extends React.Component {
     this.getLocalStorage();
   }
 
-  setQuantity = (quantity, id) => {
-    this.setState((prev) => {
-      const cartList = prev.cartList.map((item) => {
-        if (item.id === id) item.quantity = quantity;
-        return item;
-      });
-      return { cartList };
-    }, () => this.setCartQuantity());
-  }
-
-  setLocalStorage = () => {
-    localStorage.setItem('quantity', JSON.stringify(this.state));
-  }
-
   getLocalStorage = () => {
     const stateStorage = JSON.parse(localStorage.getItem('quantity'));
     this.setState({ ...stateStorage });
@@ -44,10 +30,11 @@ class App extends React.Component {
     const totalQuantity = cartList
       .map(({ quantity }) => quantity)
       .reduce((total, quantityItem) => total + quantityItem, 0);
-    this.setState({ quantity: totalQuantity }, () => this.setLocalStorage());
+    this.setState({ quantity: totalQuantity });
+    localStorage.setItem('quantity', JSON.stringify(this.state));
   }
 
-  cartQuantity = () => {
+  setCartList = () => {
     const { itemList } = this.state;
     const cartList = itemList.reduce((list, item) => {
       const includes = list.some(({ id }) => item.id === id);
@@ -58,17 +45,27 @@ class App extends React.Component {
     this.setState({ cartList }, () => this.setCartQuantity());
   }
 
+  setQuantity = (quantity, id) => {
+    this.setState((prev) => {
+      const cartList = prev.cartList.map((item) => {
+        if (item.id === id) item.quantity = quantity;
+        return item;
+      });
+      return { cartList };
+    }, () => this.setCartQuantity());
+  }
+
   addItem = (product) => {
     this.setState((previousState) => ({
       itemList: [...previousState.itemList, product],
-    }), () => this.cartQuantity());
+    }), () => this.setCartList());
   }
 
   removeItem = (idItem) => {
     this.setState((prev) => {
       const clearList = prev.itemList.filter(({ id }) => id !== idItem);
       return { itemList: clearList };
-    }, () => this.cartQuantity());
+    }, () => this.setCartList());
   }
 
   render() {

@@ -21,6 +21,45 @@ class CartItem extends React.Component {
     });
   }
 
+  renderSubtractButton = () => {
+    const { id } = this.props;
+    return (
+      <button
+        type="button"
+        onClick={ (event) => this.quantityHandler(event, id) }
+        name="subtract"
+        data-testid="product-decrease-quantity"
+      >
+        -
+      </button>);
+  }
+
+  renderAddButton = () => {
+    const { availableQuantity, id } = this.props;
+    const { quantity } = this.state;
+    if (quantity === availableQuantity) {
+      return (
+        <button
+          type="button"
+          onClick={ (event) => this.quantityHandler(event, id) }
+          name="add"
+          data-testid="product-increase-quantity"
+          disabled
+        >
+          +
+        </button>);
+    }
+    return (
+      <button
+        type="button"
+        onClick={ (event) => this.quantityHandler(event, id) }
+        name="add"
+        data-testid="product-increase-quantity"
+      >
+        +
+      </button>);
+  }
+
   render() {
     const { title, thumbnail, price, removeItem, id } = this.props;
     const { quantity } = this.state;
@@ -31,27 +70,13 @@ class CartItem extends React.Component {
         </h3>
         <img src={ thumbnail } alt={ title } />
         <p>{ `R$: ${price.toFixed(2) * quantity}` }</p>
-        <button
-          type="button"
-          onClick={ (event) => this.quantityHandler(event, id) }
-          name="subtract"
-          data-testid="product-decrease-quantity"
-        >
-          -
-        </button>
+        { this.renderSubtractButton() }
         <span
           data-testid="shopping-cart-product-quantity"
         >
           { quantity }
         </span>
-        <button
-          type="button"
-          onClick={ (event) => this.quantityHandler(event, id) }
-          name="add"
-          data-testid="product-increase-quantity"
-        >
-          +
-        </button>
+        { this.renderAddButton() }
         <br />
         <button type="button" onClick={ () => removeItem(id) }>
           Remover
@@ -68,6 +93,7 @@ CartItem.propTypes = {
   price: PropTypes.number.isRequired,
   setQuantity: PropTypes.func.isRequired,
   quantity: PropTypes.number.isRequired,
+  availableQuantity: PropTypes.number.isRequired,
   removeItem: PropTypes.func.isRequired,
 };
 
