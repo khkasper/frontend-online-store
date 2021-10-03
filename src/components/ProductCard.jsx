@@ -31,6 +31,9 @@ class ProductCard extends Component {
         >
           Adicionar ao carrinho
         </button>
+        {product.freeShipping && (
+          <p data-testid="free-shipping">Free Shipping</p>
+        )}
       </div>
     );
   }
@@ -42,6 +45,7 @@ ProductCard.propTypes = {
     title: PropTypes.string.isRequired,
     thumbnail: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
+    freeShipping: PropTypes.bool.isRequired,
   }).isRequired,
   onAdd: PropTypes.func.isRequired,
 };
