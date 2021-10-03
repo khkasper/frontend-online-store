@@ -31,7 +31,7 @@ class Home extends Component {
       title: product.title,
       thumbnail: product.thumbnail,
       price: product.price,
-      ttributes: product.attributes,
+      availableQuantity: product.available_quantity,
     }));
     this.setState({ productList: products });
   };
